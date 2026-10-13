@@ -5,7 +5,6 @@ import { AssignmentList } from './features/assignments/components/AssignmentList
 import { SeedButton } from './features/assignments/components/SeedButton';
 import { ThemeToggle } from './shared/theme/ThemeToggle';
 
-// Tab Thống kê chỉ tải khi mở lần đầu: tách thành chunk riêng, giảm JS ban đầu.
 const StatsPage = lazy(() => import('./features/stats/StatsPage'));
 
 type Tab = 'list' | 'stats';

@@ -13,7 +13,6 @@ const LABEL: Record<SeedState, string> = {
   done: "Đã tạo 10.000 bài",
 };
 
-/** Stress test (đề TH02 B4): tạo xong thì khoá hẳn — muốn làm lại thì restart BE. */
 export function SeedButton() {
   const dispatch = useAppDispatch();
   const { status } = useAppSelector(selectMeta);

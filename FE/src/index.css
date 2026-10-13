@@ -1,44 +1,32 @@
-/* ============================================================================
-   Student Deadline Tracker — hệ thống giao diện
-   Bảng màu: Productivity Tool (teal focus + warm neutral canvas).
-   Mọi cặp màu chữ/nền đã đo theo WCAG 2, ghi ngay cạnh token.
-   Chuyển động: 120–220ms, ease-out khi vào, và tắt hoàn toàn khi người dùng
-   bật prefers-reduced-motion.
-   ============================================================================ */
-
 :root {
-  /* --- nền & mực --- */
-  --bg: #f7f6f3;          /* canvas trung tính ấm */
+  --bg: #f7f6f3;
   --surface: #ffffff;
   --surface-2: #faf9f7;
-  --ink: #1c1b19;         /* 15.92:1 trên bg — AAA */
-  --muted: #63605a;       /* 5.80:1 — AA  */
-  --faint: #8a8680;       /* 3.35:1 — chỉ cho viền/biểu tượng, KHÔNG cho chữ nhỏ */
+  --ink: #1c1b19;
+  --muted: #63605a;
+  --faint: #8a8680;
   --line: #e5e2dc;
   --line-strong: #cfcbc3;
 
-  /* --- màu ngữ nghĩa --- */
-  --primary: #0f766e;     /* 5.06:1 trên bg · trắng trên nền này 5.47:1 */
+  --primary: #0f766e;
   --primary-deep: #115e59;
   --primary-wash: #e6f2f0;
-  --danger: #b3261e;      /* 6.05:1 */
+  --danger: #b3261e;
   --danger-wash: #fbeceb;
-  --warn: #a85a07;        /* 4.70:1 */
+  --warn: #a85a07;
   --warn-wash: #fdf1e3;
-  --ok: #15803d;          /* 4.64:1 */
+  --ok: #15803d;
   --ok-wash: #e9f5ed;
   --on-primary: #ffffff;
   --skel-a: #eceae5;
   --skel-b: #f6f5f2;
   color-scheme: light;
 
-  /* --- hình khối --- */
   --r-sm: 6px;
   --r-md: 10px;
   --shadow-1: 0 1px 2px rgb(28 27 25 / 6%);
   --shadow-2: 0 4px 14px -6px rgb(28 27 25 / 18%);
 
-  /* --- chuyển động --- */
   --dur-fast: 120ms;
   --dur: 180ms;
   --dur-slow: 260ms;
@@ -52,7 +40,6 @@
   background: var(--bg);
 }
 
-/* Chủ đề tối: chỉ đổi biến màu — không component nào phải render lại khi đổi theme. */
 :root[data-theme='dark'] {
   --bg: #14161a;
   --surface: #1c1f24;
@@ -99,7 +86,6 @@ button {
   cursor: pointer;
 }
 
-/* tiêu điểm bàn phím — không bao giờ bị gỡ */
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
@@ -114,7 +100,6 @@ select:focus-visible,
   padding: 32px 16px 80px;
 }
 
-/* ============================ Đầu trang ============================ */
 .app__head {
   display: flex;
   align-items: center;
@@ -160,7 +145,6 @@ select:focus-visible,
   text-transform: capitalize;
 }
 
-/* ============================ Form ============================ */
 .assignment-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -277,7 +261,6 @@ select:focus-visible,
   cursor: not-allowed;
 }
 
-/* ============================ Bộ lọc ============================ */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -333,8 +316,6 @@ select:focus-visible,
   background: rgb(255 255 255 / 22%);
 }
 
-/* ============================ Danh sách ============================ */
-/* Dòng ảo hoá: react-window đặt vị trí/chiều cao; card cao cố định, 10px còn lại là khoảng cách. */
 :root {
   --card-h: 96px;
 }
@@ -373,7 +354,6 @@ select:focus-visible,
   transform: translateY(-1px);
 }
 
-/* dải màu bên trái mang trạng thái hạn nộp */
 .assignment-item--danger {
   border-left-color: var(--danger);
 }
@@ -457,7 +437,6 @@ select:focus-visible,
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- đếm ngược: biểu tượng + chữ + trọng lượng, màu chỉ là lớp phụ ---- */
 .countdown {
   font-weight: 600;
 }
@@ -479,7 +458,6 @@ select:focus-visible,
   font-weight: 400;
 }
 
-/* ---- ô đánh dấu hoàn thành ---- */
 .check {
   display: grid;
   place-items: center;
@@ -526,7 +504,6 @@ select:focus-visible,
   transform: scale(0.9);
 }
 
-/* ---- huy hiệu độ ưu tiên ---- */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -557,7 +534,6 @@ select:focus-visible,
   border-color: var(--line-strong);
 }
 
-/* ---- nút chỉ có biểu tượng ---- */
 .icon-btn {
   display: grid;
   place-items: center;
@@ -589,7 +565,6 @@ select:focus-visible,
   color: var(--faint);
 }
 
-/* ============================ Trạng thái ============================ */
 .state {
   display: grid;
   justify-items: center;
@@ -663,7 +638,6 @@ select:focus-visible,
   transform: scale(0.97);
 }
 
-/* ---- khung xương lúc tải ---- */
 .skeleton-list {
   display: grid;
   gap: 10px;
@@ -700,7 +674,6 @@ select:focus-visible,
   gap: 7px;
 }
 
-/* ============================ Chuyển động ============================ */
 @keyframes item-in {
   from {
     opacity: 0;
@@ -752,7 +725,6 @@ select:focus-visible,
   }
 }
 
-/* ============ Thiết bị chạm: mọi vùng bấm ≥ 44×44 (§2) ============ */
 @media (pointer: coarse) {
   .icon-btn {
     width: 44px;
@@ -764,7 +736,6 @@ select:focus-visible,
   }
 }
 
-/* ============================ Màn hình hẹp ============================ */
 @media (max-width: 640px) {
   :root {
     --card-h: 148px;
@@ -801,7 +772,6 @@ select:focus-visible,
   }
 }
 
-/* ============================ Ghim · theme · banner ============================ */
 .assignment-item__actions {
   display: flex;
   align-items: center;
@@ -875,7 +845,6 @@ select:focus-visible,
   border-radius: 999px;
 }
 
-/* ============================ Tìm kiếm · tab · thống kê · seed ============================ */
 .search {
   position: relative;
   display: flex;

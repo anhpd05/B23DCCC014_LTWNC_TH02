@@ -1,6 +1,5 @@
 import { useSyncExternalStore } from 'react';
 
-/** Theo dõi một media query; trả về `matches` hiện tại và render lại khi nó đổi. */
 export function useMediaQuery(query: string): boolean {
   return useSyncExternalStore(
     (onChange) => {

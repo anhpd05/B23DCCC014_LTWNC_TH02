@@ -1,7 +1,6 @@
 import { DAY_MS, startOfDay } from '../../shared/date';
 import type { Priority, SeedAssignmentDto } from './types';
 
-/** Số bài của nút "Tạo bài tập mẫu" (stress test của đề TH02). */
 export const STRESS_COUNT = 10_000;
 
 const SUBJECTS = [
@@ -26,7 +25,6 @@ const KINDS = [
 
 const PRIORITIES: Priority[] = ['low', 'medium', 'high'];
 
-/** PRNG mulberry32: cùng seed → cùng dãy số, để dữ liệu mẫu tái lập được. */
 function mulberry32(seed: number) {
   let a = seed >>> 0;
   return () => {
@@ -38,11 +36,6 @@ function mulberry32(seed: number) {
   };
 }
 
-/**
- * Sinh `count` bài tập mẫu: 8 môn, 6 loại bài, hạn từ −30 đến +89 ngày tính từ
- * đầu ngày của `now`, khoảng 25% đã hoàn thành. `now` bắt buộc truyền vào (không
- * mặc định `Date.now()`) để kết quả không phụ thuộc đồng hồ ngầm.
- */
 export function generateAssignments(
   count: number,
   now: number,

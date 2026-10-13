@@ -9,7 +9,6 @@ import {
 } from 'class-validator';
 import { CreateAssignmentDto } from './create-assignment.dto';
 
-// Bài tập mẫu cho phép gửi kèm trạng thái hoàn thành (whitelist sẽ xoá nếu không khai báo)
 export class SeedAssignmentDto extends CreateAssignmentDto {
   @IsOptional()
   @IsBoolean()

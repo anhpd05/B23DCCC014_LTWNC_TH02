@@ -8,7 +8,7 @@ export interface Assignment {
   id: string;
   subject: string;
   title: string;
-  dueDate: string; // ISO 8601 — QĐ-07
+  dueDate: string; // ISO 8601
   priority: Priority;
   completed: boolean;
 }

@@ -13,7 +13,6 @@ import { assignmentsState, deferred, makeAssignment } from '../../../../test/fix
 jest.mock('../api');
 const mockedApi = jest.mocked(api);
 
-/** Gắn id cho DTO như BE làm khi tạo hàng loạt. */
 const withIds = (dtos: SeedAssignmentDto[]): Assignment[] =>
   dtos.map((d, i) => ({ ...d, id: `seed-${i}` }));
 
@@ -55,7 +54,6 @@ describe('seedAssignments', () => {
     const running = store.dispatch(seedAssignments());
     expect(store.getState().assignments.seedState).toBe('seeding');
 
-    // Thunk gọi generator thật: đủ STRESS_COUNT bài, đúng shape DTO (chưa có id).
     const sent = mockedApi.bulkCreate.mock.calls[0][0];
     expect(sent).toHaveLength(STRESS_COUNT);
     expect(sent[0]).not.toHaveProperty('id');
@@ -67,7 +65,6 @@ describe('seedAssignments', () => {
     expect(done.items).toHaveLength(STRESS_COUNT + 1);
     expect(done.items[0]).toBe(existing);
 
-    // Lần lỗi: store mới, BE trả lỗi → mở khoá để thử lại và hiện thông điệp.
     mockedApi.bulkCreate.mockRejectedValueOnce(new ApiError(500, 'BE quá tải', 'HTTP'));
     const failing = makeStore({ assignments: assignmentsState() });
     await failing.dispatch(seedAssignments());

@@ -1,9 +1,5 @@
 import '@testing-library/jest-dom';
 
-/**
- * jsdom không có `window.matchMedia`. Fixture này trả MediaQueryList giả, mặc định
- * `matches: false` (giao diện sáng, màn rộng); test đổi bằng `setMediaMatches`.
- */
 type Listener = (e: MediaQueryListEvent) => void;
 
 const matches = new Map<string, boolean>();
@@ -39,7 +35,6 @@ window.matchMedia = (query: string): MediaQueryList => {
   };
 };
 
-/** Đổi kết quả của một media query và phát sự kiện `change` cho ai đang nghe. */
 export function setMediaMatches(query: string, value: boolean): void {
   matches.set(query, value);
   const event = { matches: value, media: query } as MediaQueryListEvent;

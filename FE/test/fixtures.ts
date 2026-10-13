@@ -1,7 +1,6 @@
 import type { AssignmentsState } from '../src/features/assignments/assignmentsSlice';
 import type { Assignment } from '../src/features/assignments/types';
 
-/** ISO của 23:59:59 giờ địa phương, cách ngày của `now` `days` ngày (âm = quá khứ). */
 export function dueInDays(days: number, now: number = Date.now()): string {
   const d = new Date(now);
   d.setDate(d.getDate() + days);
@@ -21,7 +20,6 @@ export function makeAssignment(overrides: Partial<Assignment> = {}): Assignment 
   };
 }
 
-/** State `assignments` đầy đủ, mặc định đã tải xong — ghi đè từng phần khi cần. */
 export function assignmentsState(overrides: Partial<AssignmentsState> = {}): AssignmentsState {
   return {
     items: [],
@@ -34,7 +32,6 @@ export function assignmentsState(overrides: Partial<AssignmentsState> = {}): Ass
   };
 }
 
-/** Promise điều khiển được từ test để quan sát trạng thái "đang chờ". */
 export function deferred<T>() {
   let resolve!: (v: T) => void;
   let reject!: (e: unknown) => void;

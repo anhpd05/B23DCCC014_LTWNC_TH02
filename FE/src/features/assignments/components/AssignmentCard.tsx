@@ -29,25 +29,18 @@ interface AssignmentCardProps {
 
 type Tone = "ok" | "warn" | "danger";
 
-/** Icon độ ưu tiên — Record ép khai báo đủ 3 nhánh của Priority. */
 const PRIORITY_ICON: Record<Priority, LucideIcon> = {
   high: ChevronsUp,
   medium: Equal,
   low: ChevronDown,
 };
 
-/** Icon theo mức gấp của hạn nộp. */
 const TONE_ICON: Record<Tone, LucideIcon> = {
   ok: CalendarCheck,
   warn: Clock,
   danger: AlertTriangle,
 };
 
-/**
- * `memo` + tên hàm giữ nguyên để Profiler hiện "AssignmentCard". Chỉ có tác dụng
- * khi props ổn định: handler đến từ `useCallback`/store, `data` không đổi tham chiếu
- * nếu bài đó không đổi.
- */
 export const AssignmentCard = memo(function AssignmentCard({
   data,
   busy,

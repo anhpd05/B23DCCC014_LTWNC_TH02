@@ -7,7 +7,6 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  // 10.000 bài ≈ 1.5 MB, vượt giới hạn mặc định 100kb của body-parser
   app.useBodyParser('json', { limit: '5mb' });
   app.setGlobalPrefix('api');
   app.enableCors();

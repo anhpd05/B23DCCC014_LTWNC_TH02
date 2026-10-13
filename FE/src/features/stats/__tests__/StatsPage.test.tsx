@@ -3,7 +3,6 @@ import StatsPage from '../StatsPage';
 import { renderWithStore } from '../../../../test/renderWithStore';
 import { assignmentsState, dueInDays, makeAssignment } from '../../../../test/fixtures';
 
-/** Giá trị <dd> đi kèm nhãn <dt> trong khối thẻ số liệu. */
 const cardValue = (label: string) => screen.getByText(label, { selector: 'dt' }).nextElementSibling;
 
 describe('StatsPage', () => {

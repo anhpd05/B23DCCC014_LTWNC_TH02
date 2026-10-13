@@ -7,7 +7,6 @@ interface PinState {
   isPinned: (id: string) => boolean;
 }
 
-/** Ghim là trạng thái giao diện thuần (không đi qua BE) nên dùng Zustand, không đưa vào Redux. */
 export const usePinStore = create<PinState>()((set, get) => ({
   pinnedIds: [],
   togglePin: (id) =>
@@ -19,10 +18,6 @@ export const usePinStore = create<PinState>()((set, get) => ({
   isPinned: (id) => get().pinnedIds.includes(id),
 }));
 
-/**
- * Đưa bài đã ghim lên đầu. Partition ổn định: mỗi nhóm giữ nguyên thứ tự
- * tương đối của `items`. Trả lại chính `items` khi chưa ghim gì.
- */
 export function pinnedFirst(items: Assignment[], pinnedIds: string[]): Assignment[] {
   if (pinnedIds.length === 0) return items;
   const pinned = new Set(pinnedIds);

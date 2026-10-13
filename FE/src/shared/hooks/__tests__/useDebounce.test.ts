@@ -22,7 +22,6 @@ describe('useDebounce', () => {
     act(() => jest.advanceTimersByTime(1));
     expect(result.current).toBe('ab');
 
-    // Gõ liên tục mỗi 100 ms: bộ đếm bị đặt lại, không phát giá trị trung gian.
     const seen: string[] = [];
     for (const value of ['abc', 'abcd', 'abcde']) {
       rerender({ value });

@@ -15,7 +15,6 @@ import {
 import { usePinStore } from "../../pins/usePinStore";
 import type { Assignment, FilterStatus } from "../types";
 
-/** Khai báo tường minh — không suy ngược từ `ReturnType<typeof useAssignments>`. */
 export interface AssignmentsFacade {
   items: Assignment[];
   counts: Record<FilterStatus, number>;
@@ -52,7 +51,6 @@ export function useAssignments(): AssignmentsFacade {
       ),
     [dispatch],
   );
-  // Xoá thành công thì bỏ ghim; xoá lỗi giữ nguyên ghim (lỗi hiện ở banner của danh sách).
   const remove = useCallback(
     (id: string) => {
       void dispatch(deleteAssignment(id))

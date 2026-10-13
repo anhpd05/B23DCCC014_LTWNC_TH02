@@ -22,9 +22,7 @@ describe('usePinStore', () => {
     const items = ['a', 'b', 'c', 'd', 'e'].map((id) => makeAssignment({ id }));
     const ids = (list: typeof items) => list.map((a) => a.id);
 
-    // Ghim theo thứ tự d rồi b, nhưng kết quả theo thứ tự gốc trong `items`.
     expect(ids(pinnedFirst(items, ['d', 'b']))).toEqual(['b', 'd', 'a', 'c', 'e']);
-    // Chưa ghim gì, hoặc ghim id không có trong danh sách → trả lại chính mảng cũ.
     expect(pinnedFirst(items, [])).toBe(items);
     expect(pinnedFirst(items, ['zz'])).toBe(items);
   });

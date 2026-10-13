@@ -10,7 +10,6 @@ import type { Assignment } from '../types';
 jest.mock('../api');
 const mockedApi = jest.mocked(api);
 
-// Sắp theo hạn tăng dần nên thứ tự hiển thị gốc là: Lab 1 → Đồ án → Thuyết trình.
 const ITEMS: Assignment[] = [
   makeAssignment({ id: 'a1', subject: 'Mạng máy tính', title: 'Lab 1 — Subnet', dueDate: dueInDays(1) }),
   makeAssignment({ id: 'a2', subject: 'Kỹ thuật phần mềm', title: 'Đồ án giữa kỳ', dueDate: dueInDays(4) }),
@@ -31,7 +30,6 @@ function renderList(userOptions?: UserOptions) {
   );
 }
 
-/** Tên bài của từng dòng đang render, theo thứ tự trên màn hình. */
 const rowTitles = () =>
   screen
     .getAllByRole('listitem')
@@ -93,7 +91,6 @@ describe('AssignmentList — ghim và tìm kiếm', () => {
     await user.click(screen.getByRole('button', { name: 'Ghim Thuyết trình nhóm' }));
     expect(rowTitles()).toEqual(['Thuyết trình nhóm', 'Lab 1 — Subnet', 'Đồ án giữa kỳ']);
 
-    // Khớp theo môn, không phân biệt hoa thường.
     await user.type(screen.getByRole('searchbox', { name: 'Tìm bài tập' }), 'MẠNG');
     act(() => jest.advanceTimersByTime(299));
     expect(rowTitles()).toHaveLength(3);

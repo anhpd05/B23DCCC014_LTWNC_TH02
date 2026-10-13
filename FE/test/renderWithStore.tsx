@@ -9,11 +9,9 @@ type UserEventOptions = Parameters<typeof userEvent.setup>[0];
 
 interface Options extends Omit<RenderOptions, 'wrapper'> {
   preloadedState?: Partial<RootState>;
-  /** Truyền `{ advanceTimers: jest.advanceTimersByTime }` khi test dùng fake timers. */
   userOptions?: UserEventOptions;
 }
 
-/** Render trong Provider Redux (store mới mỗi lần) + ThemeProvider như `main.tsx`. */
 export function renderWithStore(
   ui: ReactElement,
   { preloadedState, userOptions, ...options }: Options = {},

@@ -27,19 +27,15 @@ import { filterByQuery } from "../search";
 import { FILTERS, FILTER_LABEL, type Assignment, type FilterStatus } from "../types";
 
 interface AssignmentListContextValue extends AssignmentsFacade {
-  /** Giá trị ô nhập, đổi theo từng phím. */
   query: string;
   setQuery: (q: string) => void;
-  /** `query` sau khi debounce — chính là chuỗi đã dùng để tính `visibleItems`. */
   appliedQuery: string;
-  /** Đã lọc trạng thái + tìm kiếm + ghim lên đầu — nguồn DUY NHẤT cho Items và Empty. */
   visibleItems: Assignment[];
 }
 
 const [ListProvider, useListContext] =
   createSafeContext<AssignmentListContextValue>("AssignmentList");
 
-/** ic cho từng bộ lọc — Record ép khai báo đủ 4 nhánh của FilterStatus. */
 const FILTER_ICON: Record<FilterStatus, LucideIcon> = {
   all: LayoutList,
   pending: Timer,
@@ -162,10 +158,6 @@ function Filters() {
   );
 }
 
-/**
- * Chiều cao một dòng = `--card-h` trong index.css + 10px khoảng cách. Hai bố cục
- * (1 hàng / 2 hàng ở ≤640px) có chiều cao cố định riêng nên phải khớp CSS.
- */
 const ROW_HEIGHT_WIDE = 106;
 const ROW_HEIGHT_NARROW = 158;
 const NARROW_QUERY = "(max-width: 640px)";
@@ -179,11 +171,8 @@ interface RowData {
   onTogglePin: (id: string) => void;
 }
 
-// Khoá theo id (mặc định react-window dùng index): ghim/lọc/xoá đổi chỗ dòng thì
-// state đếm ngược và focus đi theo đúng bài, không trượt sang bài khác.
 const rowKeyById = (index: number, { items }: RowData) => items[index].id;
 
-// Khai báo ngoài component cha: react-window tự memo `rowComponent`.
 function AssignmentRow({
   index,
   style,

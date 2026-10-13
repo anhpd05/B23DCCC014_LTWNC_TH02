@@ -6,7 +6,6 @@ import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 import { Assignment } from './entities/assignment.entity';
 import { createAssignmentsMock } from './mock/assignments.mock';
 
-// Trần tổng số bài trong bộ nhớ, chặn seed lặp vô hạn
 const MAX_TOTAL_ITEMS = 50_000;
 
 @Injectable()

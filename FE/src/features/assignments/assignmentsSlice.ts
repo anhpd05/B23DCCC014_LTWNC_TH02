@@ -17,7 +17,6 @@ import {
 
 export type AssignmentsStatus = "idle" | "loading" | "succeeded" | "failed";
 
-/** idle: chưa tạo (hoặc tạo lỗi, được thử lại) · seeding: đang gọi BE · done: đã tạo xong, khoá hẳn. */
 export type SeedState = "idle" | "seeding" | "done";
 
 export interface AssignmentsState {
@@ -37,8 +36,6 @@ const initialState: AssignmentsState = {
   filter: "all",
   seedState: "idle",
 };
-
-// ---- Thunks ----
 
 export const fetchAssignments = createAppAsyncThunk(
   "assignments/fetch",
@@ -69,11 +66,6 @@ export const createAssignment = createAppAsyncThunk(
   },
 );
 
-/**
- * Stress test: tạo `STRESS_COUNT` bài qua BE. `condition` (không chỉ khoá ở UI)
- * chặn seed khi danh sách chưa tải xong — nếu không, `fetchAssignments.fulfilled`
- * (thay toàn bộ `items`) có thể ghi đè 10.000 bài vừa tạo.
- */
 export const seedAssignments = createAppAsyncThunk(
   "assignments/seed",
   async (_: void, { rejectWithValue }) => {
@@ -117,8 +109,6 @@ export const deleteAssignment = createAppAsyncThunk(
     }
   },
 );
-
-// ---- Slice ----
 
 const assignmentsSlice = createSlice({
   name: "assignments",
@@ -201,8 +191,6 @@ const assignmentsSlice = createSlice({
 
 export const { setFilter, clearError } = assignmentsSlice.actions;
 export default assignmentsSlice.reducer;
-
-// ---- Selectors ----
 
 export const selectAllAssignments = (s: RootState) => s.assignments.items;
 export const selectMeta = createSelector(

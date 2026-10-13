@@ -1,7 +1,6 @@
 import { calcDaysLeft, calcStats, isOverdue } from '../deadline';
 import { dueInDays, makeAssignment } from '../../../../test/fixtures';
 
-// Mốc cố định 13/10/2026 10:00 giờ địa phương — kết quả không phụ thuộc đồng hồ máy.
 const NOW = new Date(2026, 9, 13, 10, 0, 0).getTime();
 
 describe('calcDaysLeft', () => {

@@ -1,10 +1,6 @@
 import { DAY_MS, startOfDay } from '../../shared/date';
 import type { Assignment } from './types';
 
-/**
- * Số ngày còn lại tới hạn nộp, so theo NGÀY lịch (xem `startOfDay`):
- * 0 = hôm nay, âm = quá hạn, `NaN` nếu ngày hỏng.
- */
 export function calcDaysLeft(dueDate: string, now: number = Date.now()): number {
   return Math.round((startOfDay(Date.parse(dueDate)) - startOfDay(now)) / DAY_MS);
 }

@@ -11,7 +11,6 @@ import { assignmentsState, deferred, makeAssignment } from '../../../../test/fix
 jest.mock('../api');
 const mockedApi = jest.mocked(api);
 
-/** Như trang chính: nút seed + danh sách (nơi hiện banner lỗi). Danh sách coi như đã tải. */
 function renderPage() {
   return renderWithStore(
     <>
@@ -54,7 +53,6 @@ describe('SeedButton', () => {
     expect(first.store.getState().assignments.items).toHaveLength(STRESS_COUNT + 1);
     first.unmount();
 
-    // Lần lỗi: store mới, BE trả lỗi.
     mockedApi.bulkCreate.mockRejectedValueOnce(new ApiError(504, 'Máy chủ phản hồi quá chậm', 'TIMEOUT'));
     const second = renderPage();
 
