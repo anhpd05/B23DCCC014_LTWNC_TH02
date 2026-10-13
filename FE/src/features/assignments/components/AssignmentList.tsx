@@ -20,12 +20,16 @@ import { AssignmentCard } from "./AssignmentCard";
 import { pinnedFirst, usePinStore } from "../../pins/usePinStore";
 import { useAppDispatch } from "../../../app/hooks";
 import { clearError } from "../assignmentsSlice";
+import { useDebounce } from "../../../shared/hooks/useDebounce";
 import { filterByQuery } from "../search";
 import { FILTERS, FILTER_LABEL, type Assignment, type FilterStatus } from "../types";
 
 interface AssignmentListContextValue extends AssignmentsFacade {
+  /** Giá trị ô nhập, đổi theo từng phím. */
   query: string;
   setQuery: (q: string) => void;
+  /** `query` sau khi debounce — chính là chuỗi đã dùng để tính `visibleItems`. */
+  appliedQuery: string;
   /** Đã lọc trạng thái + tìm kiếm + ghim lên đầu — nguồn DUY NHẤT cho Items và Empty. */
   visibleItems: Assignment[];
 }
@@ -67,11 +71,15 @@ function AssignmentList({ children }: PropsWithChildren) {
   const ctx = useAssignments();
   const dispatch = useAppDispatch();
   const [query, setQuery] = useState("");
+  const appliedQuery = useDebounce(query, 300);
   const pinnedIds = usePinStore((s) => s.pinnedIds);
-  const visibleItems = pinnedFirst(filterByQuery(ctx.items, query), pinnedIds);
+  const visibleItems = useMemo(
+    () => pinnedFirst(filterByQuery(ctx.items, appliedQuery), pinnedIds),
+    [ctx.items, appliedQuery, pinnedIds],
+  );
   const value = useMemo(
-    () => ({ ...ctx, query, setQuery, visibleItems }),
-    [ctx, query, visibleItems],
+    () => ({ ...ctx, query, setQuery, appliedQuery, visibleItems }),
+    [ctx, query, appliedQuery, visibleItems],
   );
 
   if (ctx.status === "loading" || ctx.status === "idle") return <LoadingList />;
@@ -175,14 +183,14 @@ function Items() {
 }
 
 function Empty({ children }: PropsWithChildren) {
-  const { visibleItems, query } = useListContext();
+  const { visibleItems, appliedQuery } = useListContext();
   if (visibleItems.length > 0) return null;
-  const searching = query.trim() !== "";
+  const searching = appliedQuery.trim() !== "";
   return (
     <div className="state">
       <Inbox size={30} strokeWidth={1.6} aria-hidden="true" />
       <p className="state__title">
-        {searching ? `Không có bài tập khớp “${query.trim()}”` : children}
+        {searching ? `Không có bài tập khớp “${appliedQuery.trim()}”` : children}
       </p>
       <p>
         {searching
