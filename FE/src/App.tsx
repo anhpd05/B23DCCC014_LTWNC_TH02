@@ -1,6 +1,7 @@
 import { CalendarClock } from 'lucide-react';
 import { AssignmentForm } from './features/assignments/components/AssignmentForm';
 import { AssignmentList } from './features/assignments/components/AssignmentList';
+import { ThemeToggle } from './shared/theme/ThemeToggle';
 
 export default function App() {
   const today = new Date().toLocaleDateString('vi-VN', {
@@ -21,6 +22,7 @@ export default function App() {
           <p className="app__sub">Quản lý deadline bài tập cá nhân</p>
         </div>
         <p className="app__today">{today}</p>
+        <ThemeToggle />
       </header>
 
       <AssignmentForm />

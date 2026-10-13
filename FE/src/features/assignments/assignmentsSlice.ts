@@ -97,6 +97,9 @@ const assignmentsSlice = createSlice({
     setFilter(state, action: PayloadAction<FilterStatus>) {
       state.filter = action.payload;
     },
+    clearError(state) {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -154,7 +157,7 @@ const assignmentsSlice = createSlice({
   },
 });
 
-export const { setFilter } = assignmentsSlice.actions;
+export const { setFilter, clearError } = assignmentsSlice.actions;
 export default assignmentsSlice.reducer;
 
 // ---- Selectors ----

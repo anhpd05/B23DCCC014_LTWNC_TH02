@@ -27,6 +27,10 @@
   --warn-wash: #fdf1e3;
   --ok: #15803d;          /* 4.64:1 */
   --ok-wash: #e9f5ed;
+  --on-primary: #ffffff;
+  --skel-a: #eceae5;
+  --skel-b: #f6f5f2;
+  color-scheme: light;
 
   /* --- hình khối --- */
   --r-sm: 6px;
@@ -46,6 +50,33 @@
   line-height: 1.5;
   color: var(--ink);
   background: var(--bg);
+}
+
+/* Chủ đề tối: chỉ đổi biến màu — không component nào phải render lại khi đổi theme. */
+:root[data-theme='dark'] {
+  --bg: #14161a;
+  --surface: #1c1f24;
+  --surface-2: #22262c;
+  --ink: #ecebe8;
+  --muted: #b4b1aa;
+  --faint: #8d8a84;
+  --line: #2d3138;
+  --line-strong: #3d424b;
+  --primary: #2dd4bf;
+  --primary-deep: #5eead4;
+  --primary-wash: #123a37;
+  --danger: #ff8a80;
+  --danger-wash: #3a1e1c;
+  --warn: #f5b062;
+  --warn-wash: #3a2c18;
+  --ok: #4ade80;
+  --ok-wash: #15301f;
+  --on-primary: #06201d;
+  --skel-a: #262a30;
+  --skel-b: #31363e;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-2: 0 4px 14px -6px rgb(0 0 0 / 60%);
+  color-scheme: dark;
 }
 
 * {
@@ -219,7 +250,7 @@ select:focus-visible,
   width: 100%;
   min-height: 44px;
   font-weight: 600;
-  color: #fff;
+  color: var(--on-primary);
   background: var(--primary);
   border: 1px solid var(--primary);
   border-radius: var(--r-sm);
@@ -283,7 +314,7 @@ select:focus-visible,
 }
 
 .filters button[aria-pressed='true'] {
-  color: #fff;
+  color: var(--on-primary);
   background: var(--primary);
   border-color: var(--primary);
 }
@@ -298,7 +329,7 @@ select:focus-visible,
 }
 
 .filters button[aria-pressed='true'] .n {
-  color: #fff;
+  color: var(--on-primary);
   background: rgb(255 255 255 / 22%);
 }
 
@@ -468,7 +499,7 @@ select:focus-visible,
 }
 
 .check__input:checked + .check__box {
-  color: #fff;
+  color: var(--on-primary);
   background: var(--ok);
   border-color: var(--ok);
   animation: pop var(--dur) var(--ease-out);
@@ -607,7 +638,7 @@ select:focus-visible,
 }
 
 .state__retry:hover {
-  background: #fff;
+  background: var(--surface);
   box-shadow: var(--shadow-2);
 }
 
@@ -637,7 +668,7 @@ select:focus-visible,
   display: block;
   height: 10px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #eceae5 25%, #f6f5f2 50%, #eceae5 75%);
+  background: linear-gradient(90deg, var(--skel-a) 25%, var(--skel-b) 50%, var(--skel-a) 75%);
   background-size: 200% 100%;
   animation: sweep 1.3s linear infinite;
 }
@@ -747,4 +778,78 @@ select:focus-visible,
     grid-column: 2;
     justify-self: start;
   }
+}
+
+/* ============================ Ghim · theme · banner ============================ */
+.assignment-item__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.assignment-item--pinned {
+  border-color: var(--primary);
+  background: var(--primary-wash);
+}
+
+.icon-btn--pin:hover:not(:disabled) {
+  color: var(--primary);
+  background: var(--primary-wash);
+  border-color: var(--primary);
+}
+
+.icon-btn--on {
+  color: var(--primary);
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--faint);
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border-radius: var(--r-md);
+}
+
+.banner p {
+  flex: 1;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.banner--error {
+  color: var(--danger);
+  background: var(--danger-wash);
+  border: 1px solid rgb(179 38 30 / 28%);
+}
+
+.banner__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 32px;
+  padding: 0 10px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentcolor;
+  border-radius: 999px;
 }

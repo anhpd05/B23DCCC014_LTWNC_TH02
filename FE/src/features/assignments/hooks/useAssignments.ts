@@ -12,6 +12,7 @@ import {
   updateAssignment,
   type AssignmentsStatus,
 } from "../assignmentsSlice";
+import { usePinStore } from "../../pins/usePinStore";
 import type { Assignment, FilterStatus } from "../types";
 
 /** Khai báo tường minh — không suy ngược từ `ReturnType<typeof useAssignments>`. */
@@ -52,7 +53,18 @@ export function useAssignments(): AssignmentsFacade {
       dispatch(
         updateAssignment({ id: a.id, changes: { completed: !a.completed } }),
       ),
-    remove: (id: string) => dispatch(deleteAssignment(id)),
+    // Xoá thành công thì bỏ ghim; xoá lỗi giữ nguyên ghim (lỗi hiện ở banner của danh sách).
+    remove: (id: string) => {
+      void dispatch(deleteAssignment(id))
+        .unwrap()
+        .then(
+          () => {
+            const pins = usePinStore.getState();
+            if (pins.isPinned(id)) pins.togglePin(id);
+          },
+          () => {},
+        );
+    },
     retry: () => dispatch(fetchAssignments()),
   };
 }

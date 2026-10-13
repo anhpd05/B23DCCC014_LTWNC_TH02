@@ -9,6 +9,8 @@ import {
   Clock,
   Equal,
   Loader2,
+  Pin,
+  PinOff,
   Trash2,
   type LucideIcon,
 } from "lucide-react";
@@ -18,8 +20,10 @@ import { PRIORITY_LABEL, type Assignment, type Priority } from "../types";
 interface AssignmentCardProps {
   data: Assignment;
   busy: boolean;
+  pinned: boolean;
   onToggle: (a: Assignment) => void;
   onRemove: (id: string) => void;
+  onTogglePin: (id: string) => void;
 }
 
 type Tone = "ok" | "warn" | "danger";
@@ -41,8 +45,10 @@ const TONE_ICON: Record<Tone, LucideIcon> = {
 export function AssignmentCard({
   data,
   busy,
+  pinned,
   onToggle,
   onRemove,
+  onTogglePin,
 }: AssignmentCardProps) {
   const countdown = useCountdown(data.dueDate);
   const PriorityIcon = PRIORITY_ICON[data.priority];
@@ -51,7 +57,7 @@ export function AssignmentCard({
 
   return (
     <li
-      className={`assignment-item assignment-item--${accent}${busy ? " assignment-item--busy" : ""}`}
+      className={`assignment-item assignment-item--${accent}${busy ? " assignment-item--busy" : ""}${pinned ? " assignment-item--pinned" : ""}`}
       aria-busy={busy}
     >
       <label className="check">
@@ -103,20 +109,33 @@ export function AssignmentCard({
         {PRIORITY_LABEL[data.priority]}
       </span>
 
-      <button
-        type="button"
-        className="icon-btn"
-        disabled={busy}
-        title={`Xoá ${data.title}`}
-        aria-label={`Xoá ${data.title}`}
-        onClick={() => onRemove(data.id)}
-      >
-        {busy ? (
-          <Loader2 size={16} className="spin" aria-hidden="true" />
-        ) : (
-          <Trash2 size={16} aria-hidden="true" />
-        )}
-      </button>
+      <div className="assignment-item__actions">
+        <button
+          type="button"
+          className={pinned ? "icon-btn icon-btn--pin icon-btn--on" : "icon-btn icon-btn--pin"}
+          aria-pressed={pinned}
+          title={pinned ? `Bỏ ghim ${data.title}` : `Ghim ${data.title}`}
+          aria-label={pinned ? `Bỏ ghim ${data.title}` : `Ghim ${data.title}`}
+          onClick={() => onTogglePin(data.id)}
+        >
+          {pinned ? <PinOff size={16} aria-hidden="true" /> : <Pin size={16} aria-hidden="true" />}
+        </button>
+
+        <button
+          type="button"
+          className="icon-btn"
+          disabled={busy}
+          title={`Xoá ${data.title}`}
+          aria-label={`Xoá ${data.title}`}
+          onClick={() => onRemove(data.id)}
+        >
+          {busy ? (
+            <Loader2 size={16} className="spin" aria-hidden="true" />
+          ) : (
+            <Trash2 size={16} aria-hidden="true" />
+          )}
+        </button>
+      </div>
     </li>
   );
 }

@@ -7,6 +7,7 @@ import {
   RotateCw,
   ServerCrash,
   Timer,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { createSafeContext } from "../../../shared/createSafeContext";
@@ -15,6 +16,9 @@ import {
   type AssignmentsFacade,
 } from "../hooks/useAssignments";
 import { AssignmentCard } from "./AssignmentCard";
+import { pinnedFirst, usePinStore } from "../../pins/usePinStore";
+import { useAppDispatch } from "../../../app/hooks";
+import { clearError } from "../assignmentsSlice";
 import { FILTERS, FILTER_LABEL, type FilterStatus } from "../types";
 
 const [ListProvider, useListContext] =
@@ -52,6 +56,7 @@ function LoadingList() {
 
 function AssignmentList({ children }: PropsWithChildren) {
   const ctx = useAssignments();
+  const dispatch = useAppDispatch();
 
   if (ctx.status === "loading" || ctx.status === "idle") return <LoadingList />;
 
@@ -71,7 +76,23 @@ function AssignmentList({ children }: PropsWithChildren) {
 
   return (
     <ListProvider value={ctx}>
-      <section className="list">{children}</section>
+      <section className="list">
+        {ctx.error && (
+          <div className="banner banner--error" role="alert">
+            <AlertTriangle size={16} aria-hidden="true" />
+            <p>{ctx.error}</p>
+            <button
+              type="button"
+              className="banner__close"
+              onClick={() => dispatch(clearError())}
+            >
+              <X size={14} aria-hidden="true" />
+              Đóng
+            </button>
+          </div>
+        )}
+        {children}
+      </section>
     </ListProvider>
   );
 }
@@ -101,16 +122,20 @@ function Filters() {
 
 function Items() {
   const { items, toggle, remove, mutating } = useListContext();
+  const pinnedIds = usePinStore((s) => s.pinnedIds);
+  const togglePin = usePinStore((s) => s.togglePin);
   if (items.length === 0) return null;
   return (
     <ul>
-      {items.map((a) => (
+      {pinnedFirst(items, pinnedIds).map((a) => (
         <AssignmentCard
           key={a.id}
           data={a}
           busy={mutating.includes(a.id)}
+          pinned={pinnedIds.includes(a.id)}
           onToggle={toggle}
           onRemove={remove}
+          onTogglePin={togglePin}
         />
       ))}
     </ul>
