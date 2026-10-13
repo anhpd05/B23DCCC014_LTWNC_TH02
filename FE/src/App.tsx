@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { CalendarClock } from 'lucide-react';
 import { AssignmentForm } from './features/assignments/components/AssignmentForm';
 import { AssignmentList } from './features/assignments/components/AssignmentList';
 import { SeedButton } from './features/assignments/components/SeedButton';
-import StatsPage from './features/stats/StatsPage';
 import { ThemeToggle } from './shared/theme/ThemeToggle';
+
+// Tab Thống kê chỉ tải khi mở lần đầu: tách thành chunk riêng, giảm JS ban đầu.
+const StatsPage = lazy(() => import('./features/stats/StatsPage'));
 
 type Tab = 'list' | 'stats';
 
@@ -12,6 +14,23 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'list', label: 'Danh sách' },
   { id: 'stats', label: 'Thống kê' },
 ];
+
+function StatsSkeleton() {
+  return (
+    <div className="skeleton-list" role="status" aria-label="Đang tải thống kê">
+      {[0, 1].map((i) => (
+        <div className="skeleton" key={i}>
+          <i />
+          <div className="skeleton__lines">
+            <i style={{ width: '38%' }} />
+            <i style={{ width: '72%' }} />
+          </div>
+          <i style={{ height: 18 }} />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function App() {
   const [tab, setTab] = useState<Tab>('list');
@@ -66,7 +85,9 @@ export default function App() {
             </AssignmentList>
           </>
         ) : (
-          <StatsPage />
+          <Suspense fallback={<StatsSkeleton />}>
+            <StatsPage />
+          </Suspense>
         )}
       </div>
     </main>
