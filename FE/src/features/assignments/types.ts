@@ -14,6 +14,7 @@ export interface Assignment {
 }
 
 export type NewAssignmentDto = Omit<Assignment, 'id' | 'completed'>;
+export type SeedAssignmentDto = Omit<Assignment, 'id'>;
 export type UpdateAssignmentDto = Partial<Omit<Assignment, 'id'>>;
 
 export const PRIORITY_WEIGHT: Record<Priority, number> = {

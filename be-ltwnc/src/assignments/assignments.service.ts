@@ -1,9 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, PayloadTooLargeException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
+import { SeedAssignmentDto } from './dto/bulk-create-assignments.dto';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 import { Assignment } from './entities/assignment.entity';
 import { createAssignmentsMock } from './mock/assignments.mock';
+
+// Trần tổng số bài trong bộ nhớ, chặn seed lặp vô hạn
+const MAX_TOTAL_ITEMS = 50_000;
 
 @Injectable()
 export class AssignmentsService {
@@ -17,6 +21,22 @@ export class AssignmentsService {
     };
     this.items.push(assignment);
     return assignment;
+  }
+
+  createMany(dtos: SeedAssignmentDto[]): Assignment[] {
+    if (this.items.length + dtos.length > MAX_TOTAL_ITEMS) {
+      throw new PayloadTooLargeException('Vượt giới hạn 50.000 bài');
+    }
+    const created: Assignment[] = dtos.map((dto) => ({
+      id: randomUUID(),
+      subject: dto.subject,
+      title: dto.title,
+      dueDate: dto.dueDate,
+      priority: dto.priority,
+      completed: dto.completed ?? false,
+    }));
+    this.items.push(...created);
+    return created;
   }
 
   findAll(): Assignment[] {

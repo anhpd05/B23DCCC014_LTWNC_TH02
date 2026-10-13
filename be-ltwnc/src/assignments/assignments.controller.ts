@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AssignmentsService } from './assignments.service';
+import { BulkCreateAssignmentsDto } from './dto/bulk-create-assignments.dto';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 
@@ -10,6 +11,11 @@ export class AssignmentsController {
   @Post()
   create(@Body() createAssignmentDto: CreateAssignmentDto) {
     return this.assignmentsService.create(createAssignmentDto);
+  }
+
+  @Post('bulk')
+  createMany(@Body() bulkCreateAssignmentsDto: BulkCreateAssignmentsDto) {
+    return this.assignmentsService.createMany(bulkCreateAssignmentsDto.items);
   }
 
   @Get()

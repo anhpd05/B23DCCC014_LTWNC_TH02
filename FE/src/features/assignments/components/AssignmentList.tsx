@@ -1,10 +1,11 @@
-import type { PropsWithChildren } from "react";
+import { useState, type PropsWithChildren } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
   Inbox,
   LayoutList,
   RotateCw,
+  Search as SearchIcon,
   ServerCrash,
   Timer,
   X,
@@ -19,10 +20,18 @@ import { AssignmentCard } from "./AssignmentCard";
 import { pinnedFirst, usePinStore } from "../../pins/usePinStore";
 import { useAppDispatch } from "../../../app/hooks";
 import { clearError } from "../assignmentsSlice";
-import { FILTERS, FILTER_LABEL, type FilterStatus } from "../types";
+import { filterByQuery } from "../search";
+import { FILTERS, FILTER_LABEL, type Assignment, type FilterStatus } from "../types";
+
+interface AssignmentListContextValue extends AssignmentsFacade {
+  query: string;
+  setQuery: (q: string) => void;
+  /** Đã lọc trạng thái + tìm kiếm + ghim lên đầu — nguồn DUY NHẤT cho Items và Empty. */
+  visibleItems: Assignment[];
+}
 
 const [ListProvider, useListContext] =
-  createSafeContext<AssignmentsFacade>("AssignmentList");
+  createSafeContext<AssignmentListContextValue>("AssignmentList");
 
 /** ic cho từng bộ lọc — Record ép khai báo đủ 4 nhánh của FilterStatus. */
 const FILTER_ICON: Record<FilterStatus, LucideIcon> = {
@@ -57,6 +66,8 @@ function LoadingList() {
 function AssignmentList({ children }: PropsWithChildren) {
   const ctx = useAssignments();
   const dispatch = useAppDispatch();
+  const [query, setQuery] = useState("");
+  const pinnedIds = usePinStore((s) => s.pinnedIds);
 
   if (ctx.status === "loading" || ctx.status === "idle") return <LoadingList />;
 
@@ -74,8 +85,10 @@ function AssignmentList({ children }: PropsWithChildren) {
     );
   }
 
+  const visibleItems = pinnedFirst(filterByQuery(ctx.items, query), pinnedIds);
+
   return (
-    <ListProvider value={ctx}>
+    <ListProvider value={{ ...ctx, query, setQuery, visibleItems }}>
       <section className="list">
         {ctx.error && (
           <div className="banner banner--error" role="alert">
@@ -94,6 +107,22 @@ function AssignmentList({ children }: PropsWithChildren) {
         {children}
       </section>
     </ListProvider>
+  );
+}
+
+function Search() {
+  const { query, setQuery } = useListContext();
+  return (
+    <div className="search">
+      <SearchIcon size={16} aria-hidden="true" />
+      <input
+        type="search"
+        value={query}
+        placeholder="Tìm theo tên bài hoặc môn học"
+        aria-label="Tìm bài tập"
+        onChange={(e) => setQuery(e.target.value)}
+      />
+    </div>
   );
 }
 
@@ -121,13 +150,13 @@ function Filters() {
 }
 
 function Items() {
-  const { items, toggle, remove, mutating } = useListContext();
+  const { visibleItems, toggle, remove, mutating } = useListContext();
   const pinnedIds = usePinStore((s) => s.pinnedIds);
   const togglePin = usePinStore((s) => s.togglePin);
-  if (items.length === 0) return null;
+  if (visibleItems.length === 0) return null;
   return (
     <ul>
-      {pinnedFirst(items, pinnedIds).map((a) => (
+      {visibleItems.map((a) => (
         <AssignmentCard
           key={a.id}
           data={a}
@@ -143,20 +172,25 @@ function Items() {
 }
 
 function Empty({ children }: PropsWithChildren) {
-  const { items } = useListContext();
-  if (items.length > 0) return null;
+  const { visibleItems, query } = useListContext();
+  if (visibleItems.length > 0) return null;
+  const searching = query.trim() !== "";
   return (
     <div className="state">
       <Inbox size={30} strokeWidth={1.6} aria-hidden="true" />
-      <p className="state__title">{children}</p>
+      <p className="state__title">
+        {searching ? `Không có bài tập khớp “${query.trim()}”` : children}
+      </p>
       <p>
-        Thêm bài tập mới bằng biểu mẫu phía trên, hoặc đổi bộ lọc để xem mục
-        khác.
+        {searching
+          ? "Thử từ khoá khác hoặc xoá ô tìm kiếm."
+          : "Thêm bài tập mới bằng biểu mẫu phía trên, hoặc đổi bộ lọc để xem mục khác."}
       </p>
     </div>
   );
 }
 
+AssignmentList.Search = Search;
 AssignmentList.Filters = Filters;
 AssignmentList.Items = Items;
 AssignmentList.Empty = Empty;

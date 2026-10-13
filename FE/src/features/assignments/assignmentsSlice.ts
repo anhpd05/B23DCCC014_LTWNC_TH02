@@ -5,6 +5,7 @@ import { createAppAsyncThunk } from "../../app/hooks";
 import { api } from "./api";
 import { isApiError } from "../../shared/ApiError";
 import { isOverdue } from "./deadline";
+import { STRESS_COUNT, generateAssignments } from "./mockData";
 import {
   FILTERS,
   PRIORITY_WEIGHT,
@@ -16,12 +17,16 @@ import {
 
 export type AssignmentsStatus = "idle" | "loading" | "succeeded" | "failed";
 
+/** idle: chưa tạo (hoặc tạo lỗi, được thử lại) · seeding: đang gọi BE · done: đã tạo xong, khoá hẳn. */
+export type SeedState = "idle" | "seeding" | "done";
+
 export interface AssignmentsState {
   items: Assignment[];
   status: AssignmentsStatus;
   error: string | null;
   mutatingIds: string[];
   filter: FilterStatus;
+  seedState: SeedState;
 }
 
 const initialState: AssignmentsState = {
@@ -30,6 +35,7 @@ const initialState: AssignmentsState = {
   error: null,
   mutatingIds: [],
   filter: "all",
+  seedState: "idle",
 };
 
 // ---- Thunks ----
@@ -63,7 +69,31 @@ export const createAssignment = createAppAsyncThunk(
   },
 );
 
-export const updateAssignment = createAppAsyncThunk(
+/**
+ * Stress test: tạo `STRESS_COUNT` bài qua BE. `condition` (không chỉ khoá ở UI)
+ * chặn seed khi danh sách chưa tải xong — nếu không, `fetchAssignments.fulfilled`
+ * (thay toàn bộ `items`) có thể ghi đè 10.000 bài vừa tạo.
+ */
+export const seedAssignments = createAppAsyncThunk(
+  "assignments/seed",
+  async (_: void, { rejectWithValue }) => {
+    try {
+      return await api.bulkCreate(generateAssignments(STRESS_COUNT, Date.now()));
+    } catch (e) {
+      return rejectWithValue(
+        isApiError(e) ? e.message : "Không tạo được bài tập mẫu",
+      );
+    }
+  },
+  {
+    condition: (_, { getState }) => {
+      const { status, seedState } = getState().assignments;
+      return status === "succeeded" && seedState === "idle";
+    },
+  },
+);
+
+export const updateAssignment =createAppAsyncThunk(
   "assignments/update",
   async (
     arg: { id: string; changes: UpdateAssignmentDto },
@@ -118,6 +148,17 @@ const assignmentsSlice = createSlice({
       .addCase(createAssignment.fulfilled, (s, a) => {
         s.items.push(a.payload);
       })
+      .addCase(seedAssignments.pending, (s) => {
+        s.seedState = "seeding";
+        s.error = null;
+      })
+      .addCase(seedAssignments.fulfilled, (s, a) => {
+        s.items.push(...a.payload);
+        s.seedState = "done";
+      })
+      .addCase(seedAssignments.rejected, (s) => {
+        s.seedState = "idle";
+      })
       .addCase(updateAssignment.pending, (s, a) => {
         s.mutatingIds.push(a.meta.arg.id);
       })
@@ -149,6 +190,7 @@ const assignmentsSlice = createSlice({
           createAssignment.rejected,
           updateAssignment.rejected,
           deleteAssignment.rejected,
+          seedAssignments.rejected,
         ),
         (s, a) => {
           s.error = a.payload ?? "Thao tác thất bại";
@@ -171,7 +213,8 @@ export const selectMeta = createSelector(
   (status, error) => ({ status, error }),
 );
 export const selectMutatingIds = (s: RootState) => s.assignments.mutatingIds;
-export const selectFilter = (s: RootState) => s.assignments.filter;
+export const selectSeedState = (s: RootState) => s.assignments.seedState;
+export const selectFilter =(s: RootState) => s.assignments.filter;
 
 type Matcher = (a: Assignment, now: number) => boolean;
 
