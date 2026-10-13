@@ -1,0 +1,63 @@
+{
+  "source": "profiler-theme.json",
+  "measuredAt": "2026-10-13T16:23:17.330+07:00",
+  "url": "http://localhost:5173",
+  "viewport": {
+    "width": 1400,
+    "height": 1000
+  },
+  "settleMs": 500,
+  "timeline": {
+    "attempt": 1,
+    "reloadAt": "2026-10-13T16:23:16.012+07:00",
+    "startAt": "2026-10-13T16:23:16.552+07:00",
+    "stopAt": "2026-10-13T16:23:17.307+07:00",
+    "reloadToStartMs": 540,
+    "reloadToStopMs": 1295,
+    "mountToStopMs": 1288,
+    "clickedAt": "2026-10-13T16:23:16.621+07:00",
+    "htmlThemeBefore": "light",
+    "htmlThemeAfter": "dark"
+  },
+  "rejectedAttempts": [],
+  "assignmentCardRenders": 0,
+  "themeCommits": [
+    {
+      "rootID": 1,
+      "index": 0,
+      "timestamp": 46.69999999925494,
+      "duration": 2.6,
+      "renders": 0,
+      "fibersRendered": 5,
+      "updaters": [
+        "ThemeProvider"
+      ],
+      "components": {
+        "Sun": 1,
+        "ForwardRef(Anonymous)": 1,
+        "ThemeToggle": 1,
+        "Context.Provider": 1,
+        "ThemeProvider": 1
+      }
+    }
+  ],
+  "allCommits": [
+    {
+      "rootID": 1,
+      "index": 0,
+      "timestamp": 46.69999999925494,
+      "duration": 2.6,
+      "renders": 0,
+      "fibersRendered": 5,
+      "updaters": [
+        "ThemeProvider"
+      ]
+    }
+  ],
+  "tools": {
+    "browser": "Chrome/155.0.8059.39",
+    "cft": "155.0.8059.39",
+    "reactDevtools": "8.0.0",
+    "reactDevtoolsSha256": "d92e1122a16362cc5510927068a5b1a8d50b43e1f3be25c3117f7c005807b302"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "source": "profiler-search.json",
+  "definition": "Σ commit × fiber AssignmentCard (hoặc Memo(AssignmentCard)) (rootID:fiberID) có mặt trong fiberActualDurations; tên fiber từ snapshots + replay operations",
+  "component": "AssignmentCard",
+  "totalRenders": 9,
+  "foreignRenders": 0,
+  "interactionRenders": 9,
+  "distinctInstances": 9,
+  "commitCount": 5,
+  "totalCommitDurationMs": 153.4,
+  "heaviestCommit": {
+    "rootID": 1,
+    "index": 3,
+    "timestamp": 868.6000000014901,
+    "duration": 134.3,
+    "renders": 9,
+    "fibersRendered": 174,
+    "updaters": [
+      "AssignmentList"
+    ]
+  },
+  "foreignCommits": [
+    {
+      "rootID": 1,
+      "index": 4,
+      "timestamp": 1025.4000000022352,
+      "duration": 0.6,
+      "renders": 0,
+      "fibersRendered": 1,
+      "updaters": [
+        "He"
+      ]
+    }
+  ],
+  "perInstance": {
+    "1:233": 1,
+    "1:250": 1,
+    "1:267": 1,
+    "1:284": 1,
+    "1:301": 1,
+    "1:318": 1,
+    "1:335": 1,
+    "1:352": 1,
+    "1:369": 1
+  },
+  "commits": [
+    {
+      "rootID": 1,
+      "index": 0,
+      "timestamp": 49.600000001490116,
+      "duration": 7.8,
+      "renders": 0,
+      "fibersRendered": 17,
+      "updaters": [
+        "AssignmentList"
+      ]
+    },
+    {
+      "rootID": 1,
+      "index": 1,
+      "timestamp": 221.60000000149012,
+      "duration": 5.5,
+      "renders": 0,
+      "fibersRendered": 17,
+      "updaters": [
+        "AssignmentList"
+      ]
+    },
+    {
+      "rootID": 1,
+      "index": 2,
+      "timestamp": 391.20000000298023,
+      "duration": 5.2,
+      "renders": 0,
+      "fibersRendered": 17,
+      "updaters": [
+        "AssignmentList"
+      ]
+    },
+    {
+      "rootID": 1,
+      "index": 3,
+      "timestamp": 868.6000000014901,
+      "duration": 134.3,
+      "renders": 9,
+      "fibersRendered": 174,
+      "updaters": [
+        "AssignmentList"
+      ]
+    },
+    {
+      "rootID": 1,
+      "index": 4,
+      "timestamp": 1025.4000000022352,
+      "duration": 0.6,
+      "renders": 0,
+      "fibersRendered": 1,
+      "updaters": [
+        "He"
+      ]
+    }
+  ]
+}

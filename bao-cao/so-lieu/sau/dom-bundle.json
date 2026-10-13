@@ -1,0 +1,26 @@
+{
+  "measuredAt": "2026-10-13T16:22:41.413+07:00",
+  "url": "http://127.0.0.1:4173",
+  "viewport": {
+    "width": 1400,
+    "height": 1000
+  },
+  "selector": ".assignment-item",
+  "domCards": 11,
+  "fixtureCount": 10006,
+  "initialJs": {
+    "distDir": "C:\\Users\\admin\\orca\\workspaces\\LTWNC_TH01\\LTWNC_TH02\\FE\\dist",
+    "gzipLevel": 9,
+    "files": [
+      {
+        "file": "/assets/index-qpU9osfq.js",
+        "rawBytes": 353222,
+        "gzipBytes": 114501
+      }
+    ],
+    "totalRawBytes": 353222,
+    "totalGzipBytes": 114501,
+    "totalRawKB": 344.94,
+    "totalGzipKB": 111.82
+  }
+}

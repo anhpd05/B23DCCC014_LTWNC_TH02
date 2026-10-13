@@ -1,0 +1,68 @@
+
+> fe-ltwnc@0.0.0 test:coverage
+> jest --runInBand --coverage --verbose
+
+  [2m[33mconsole.warn[39m[22m
+[33m    SerializableStateInvariantMiddleware took 95ms, which is more than the warning threshold of 32ms. [39m
+[33m    If your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.[39m
+[33m    It is disabled in production builds, so you don't need to worry about that.[39m
+[2m[22m
+[2m      [2mat Object.warnIfExceeded ([22m[2mnode_modules/@reduxjs/toolkit/src/utils.ts[2m:16:17)[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/@reduxjs/toolkit/src/serializableStateInvariantMiddleware.ts[2m:197:22[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/redux-thunk/dist/cjs/redux-thunk.cjs[2m:32:12[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/@reduxjs/toolkit/src/immutableStateInvariantMiddleware.ts[2m:183:34[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/@reduxjs/toolkit/src/actionCreatorInvariantMiddleware.ts[2m:29:12[22m[2m[22m
+[2m      [2mat dispatch ([22m[2mnode_modules/redux/src/applyMiddleware.ts[2m:52:38)[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/@reduxjs/toolkit/src/createAsyncThunk.ts[2m:399:13[22m[2m[22m
+
+  [2m[33mconsole.warn[39m[22m
+[33m    SerializableStateInvariantMiddleware took 109ms, which is more than the warning threshold of 32ms. [39m
+[33m    If your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.[39m
+[33m    It is disabled in production builds, so you don't need to worry about that.[39m
+[2m[22m
+[2m    [0m [90m 62 |[39m[22m
+[2m     [90m 63 |[39m     pending[33m.[39mresolve(withIds(sent))[33m;[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 64 |[39m     [36mawait[39m running[33m;[39m[22m
+[2m     [90m    |[39m     [31m[1m^[22m[2m[39m[22m
+[2m     [90m 65 |[39m     [36mconst[39m done [33m=[39m store[33m.[39mgetState()[33m.[39massignments[33m;[39m[22m
+[2m     [90m 66 |[39m     expect(done[33m.[39mseedState)[33m.[39mtoBe([32m'done'[39m)[33m;[39m[22m
+[2m     [90m 67 |[39m     expect(done[33m.[39mitems)[33m.[39mtoHaveLength([33mSTRESS_COUNT[39m [33m+[39m [35m1[39m)[33m;[39m[0m[22m
+[2m[22m
+[2m      [2mat Object.warnIfExceeded ([22m[2mnode_modules/@reduxjs/toolkit/src/utils.ts[2m:16:17)[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/@reduxjs/toolkit/src/serializableStateInvariantMiddleware.ts[2m:197:22[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/redux-thunk/dist/cjs/redux-thunk.cjs[2m:32:12[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/@reduxjs/toolkit/src/immutableStateInvariantMiddleware.ts[2m:183:34[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/@reduxjs/toolkit/src/actionCreatorInvariantMiddleware.ts[2m:29:12[22m[2m[22m
+[2m      [2mat dispatch ([22m[2mnode_modules/redux/src/applyMiddleware.ts[2m:52:38)[22m[2m[22m
+[2m      [2mat [22m[2mnode_modules/@reduxjs/toolkit/src/createAsyncThunk.ts[2m:399:13[22m[2m[22m
+[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/features/assignments/__tests__/assignmentsSlice.test.ts[39m[0m[2m:64:5)[22m[2m[22m
+
+------------------------|---------|----------|---------|---------|----------------------------
+File                    | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s          
+------------------------|---------|----------|---------|---------|----------------------------
+[32;1mAll files              [0m | [32;1m  91.22[0m | [33;1m   72.66[0m | [32;1m  84.82[0m | [32;1m  91.66[0m | [31;1m                          [0m 
+[32;1m assignments           [0m | [32;1m  86.04[0m | [33;1m   50.84[0m | [33;1m  79.03[0m | [32;1m  86.53[0m | [31;1m                          [0m 
+[31;1m  api.ts               [0m | [31;1m  35.71[0m | [31;1m       0[0m | [31;1m      0[0m | [31;1m  35.71[0m | [31;1m12-16,20-30               [0m 
+[32;1m  assignmentsSlice.ts  [0m | [32;1m  89.24[0m | [33;1m   54.16[0m | [32;1m  88.37[0m | [32;1m     90[0m | [31;1m65,102-105,128,163,169-170[0m 
+[32;1m  deadline.ts          [0m | [32;1m    100[0m | [33;1m   76.92[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m8-14,61                   [0m 
+[33;1m  guards.ts            [0m | [33;1m  54.54[0m | [31;1m   13.33[0m | [31;1m  33.33[0m | [33;1m  55.55[0m | [31;1m8-10,22                   [0m 
+[32;1m  mockData.ts          [0m | [32;1m    100[0m | [32;1m     100[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m                          [0m 
+[32;1m  search.ts            [0m | [32;1m    100[0m | [32;1m     100[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m                          [0m 
+[32;1m  types.ts             [0m | [32;1m    100[0m | [32;1m     100[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m                          [0m 
+[32;1m assignments/components[0m | [32;1m  99.14[0m | [32;1m    89.7[0m | [32;1m  96.87[0m | [32;1m  99.09[0m | [31;1m                          [0m 
+[32;1m  AssignmentCard.tsx   [0m | [32;1m    100[0m | [32;1m      85[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m62,91-105                 [0m 
+[32;1m  AssignmentForm.tsx   [0m | [32;1m    100[0m | [32;1m   96.15[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m107                       [0m 
+[32;1m  AssignmentList.tsx   [0m | [32;1m  98.52[0m | [32;1m   83.33[0m | [32;1m  94.44[0m | [32;1m  98.36[0m | [31;1m153                       [0m 
+[32;1m  SeedButton.tsx       [0m | [32;1m    100[0m | [32;1m     100[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m                          [0m 
+[32;1m assignments/hooks     [0m | [32;1m  81.48[0m | [33;1m      50[0m | [33;1m  66.66[0m | [32;1m  83.33[0m | [31;1m                          [0m 
+[32;1m  useAssignments.ts    [0m | [32;1m  81.48[0m | [33;1m      50[0m | [33;1m  66.66[0m | [32;1m  83.33[0m | [31;1m45,50,62-63               [0m 
+[32;1m pins                  [0m | [32;1m    100[0m | [32;1m     100[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m                          [0m 
+[32;1m  usePinStore.ts       [0m | [32;1m    100[0m | [32;1m     100[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m                          [0m 
+[32;1m stats                 [0m | [32;1m    100[0m | [32;1m     100[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m                          [0m 
+[32;1m  StatsPage.tsx        [0m | [32;1m    100[0m | [32;1m     100[0m | [32;1m    100[0m | [32;1m    100[0m | [33;1m                          [0m 
+------------------------|---------|----------|---------|---------|----------------------------
+[1mTest Suites: [22m[1m[32m9 passed[39m[22m, 9 total
+[1mTests:       [22m[1m[32m23 passed[39m[22m, 23 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        7.514 s, estimated 8 s
+[2mRan all test suites[22m[2m.[22m

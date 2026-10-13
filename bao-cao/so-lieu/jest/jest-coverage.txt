@@ -1,0 +1,68 @@
+
+> fe-ltwnc@0.0.0 test:coverage
+> jest --runInBand --coverage --verbose
+
+  console.warn
+    SerializableStateInvariantMiddleware took 95ms, which is more than the warning threshold of 32ms. 
+    If your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.
+    It is disabled in production builds, so you don't need to worry about that.
+
+      at Object.warnIfExceeded (node_modules/@reduxjs/toolkit/src/utils.ts:16:17)
+      at node_modules/@reduxjs/toolkit/src/serializableStateInvariantMiddleware.ts:197:22
+      at node_modules/redux-thunk/dist/cjs/redux-thunk.cjs:32:12
+      at node_modules/@reduxjs/toolkit/src/immutableStateInvariantMiddleware.ts:183:34
+      at node_modules/@reduxjs/toolkit/src/actionCreatorInvariantMiddleware.ts:29:12
+      at dispatch (node_modules/redux/src/applyMiddleware.ts:52:38)
+      at node_modules/@reduxjs/toolkit/src/createAsyncThunk.ts:399:13
+
+  console.warn
+    SerializableStateInvariantMiddleware took 109ms, which is more than the warning threshold of 32ms. 
+    If your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.
+    It is disabled in production builds, so you don't need to worry about that.
+
+      62 |
+      63 |     pending.resolve(withIds(sent));
+    > 64 |     await running;
+         |     ^
+      65 |     const done = store.getState().assignments;
+      66 |     expect(done.seedState).toBe('done');
+      67 |     expect(done.items).toHaveLength(STRESS_COUNT + 1);
+
+      at Object.warnIfExceeded (node_modules/@reduxjs/toolkit/src/utils.ts:16:17)
+      at node_modules/@reduxjs/toolkit/src/serializableStateInvariantMiddleware.ts:197:22
+      at node_modules/redux-thunk/dist/cjs/redux-thunk.cjs:32:12
+      at node_modules/@reduxjs/toolkit/src/immutableStateInvariantMiddleware.ts:183:34
+      at node_modules/@reduxjs/toolkit/src/actionCreatorInvariantMiddleware.ts:29:12
+      at dispatch (node_modules/redux/src/applyMiddleware.ts:52:38)
+      at node_modules/@reduxjs/toolkit/src/createAsyncThunk.ts:399:13
+      at Object.<anonymous> (src/features/assignments/__tests__/assignmentsSlice.test.ts:64:5)
+
+------------------------|---------|----------|---------|---------|----------------------------
+File                    | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s          
+------------------------|---------|----------|---------|---------|----------------------------
+All files               |   91.22 |    72.66 |   84.82 |   91.66 |                            
+ assignments            |   86.04 |    50.84 |   79.03 |   86.53 |                            
+  api.ts                |   35.71 |        0 |       0 |   35.71 | 12-16,20-30                
+  assignmentsSlice.ts   |   89.24 |    54.16 |   88.37 |      90 | 65,102-105,128,163,169-170 
+  deadline.ts           |     100 |    76.92 |     100 |     100 | 8-14,61                    
+  guards.ts             |   54.54 |    13.33 |   33.33 |   55.55 | 8-10,22                    
+  mockData.ts           |     100 |      100 |     100 |     100 |                            
+  search.ts             |     100 |      100 |     100 |     100 |                            
+  types.ts              |     100 |      100 |     100 |     100 |                            
+ assignments/components |   99.14 |     89.7 |   96.87 |   99.09 |                            
+  AssignmentCard.tsx    |     100 |       85 |     100 |     100 | 62,91-105                  
+  AssignmentForm.tsx    |     100 |    96.15 |     100 |     100 | 107                        
+  AssignmentList.tsx    |   98.52 |    83.33 |   94.44 |   98.36 | 153                        
+  SeedButton.tsx        |     100 |      100 |     100 |     100 |                            
+ assignments/hooks      |   81.48 |       50 |   66.66 |   83.33 |                            
+  useAssignments.ts     |   81.48 |       50 |   66.66 |   83.33 | 45,50,62-63                
+ pins                   |     100 |      100 |     100 |     100 |                            
+  usePinStore.ts        |     100 |      100 |     100 |     100 |                            
+ stats                  |     100 |      100 |     100 |     100 |                            
+  StatsPage.tsx         |     100 |      100 |     100 |     100 |                            
+------------------------|---------|----------|---------|---------|----------------------------
+Test Suites: 9 passed, 9 total
+Tests:       23 passed, 23 total
+Snapshots:   0 total
+Time:        7.514 s, estimated 8 s
+Ran all test suites.

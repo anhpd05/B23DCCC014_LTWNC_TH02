@@ -1,0 +1,36 @@
+{
+  "measuredAt": "2026-10-13T16:25:19.030+07:00",
+  "url": "http://localhost:5173",
+  "chosenTitles": [
+    "Báo cáo thực hành #2247 — Cơ sở dữ liệu",
+    "Bài tập về nhà #2575 — Kỹ thuật phần mềm"
+  ],
+  "chosenPositionsBefore": [
+    2,
+    3
+  ],
+  "topAfterPin": [
+    {
+      "title": "Bài kiểm tra giữa kỳ #1870 — Hệ điều hành",
+      "pinned": true,
+      "completed": false
+    },
+    {
+      "title": "Bài tập về nhà #2575 — Kỹ thuật phần mềm",
+      "pinned": true,
+      "completed": false
+    }
+  ],
+  "topAfterFilterOverdue": [
+    {
+      "title": "Bài kiểm tra giữa kỳ #1870 — Hệ điều hành",
+      "pinned": true,
+      "completed": false
+    },
+    {
+      "title": "Bài tập về nhà #2575 — Kỹ thuật phần mềm",
+      "pinned": true,
+      "completed": false
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "measuredAt": "2026-10-13T16:22:38.032+07:00",
+  "url": "http://127.0.0.1:4174",
+  "viewport": {
+    "width": 1400,
+    "height": 1000
+  },
+  "selector": ".assignment-item",
+  "domCards": 10006,
+  "fixtureCount": 10006,
+  "initialJs": {
+    "distDir": "C:\\Users\\admin\\orca\\workspaces\\LTWNC_TH01\\th02-baseline-wt\\FE\\dist",
+    "gzipLevel": 9,
+    "files": [
+      {
+        "file": "/assets/index-BRicGzzQ.js",
+        "rawBytes": 340510,
+        "gzipBytes": 110095
+      }
+    ],
+    "totalRawBytes": 340510,
+    "totalGzipBytes": 110095,
+    "totalRawKB": 332.53,
+    "totalGzipKB": 107.51
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "lighthouseVersion": "12.8.2",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "configSettings": {
+    "formFactor": "mobile",
+    "throttlingMethod": "simulate",
+    "onlyCategories": [
+      "performance"
+    ]
+  },
+  "metrics": {
+    "performance": {
+      "label": "Performance",
+      "unit": "điểm"
+    },
+    "first-contentful-paint": {
+      "label": "FCP",
+      "unit": "ms"
+    },
+    "largest-contentful-paint": {
+      "label": "LCP",
+      "unit": "ms"
+    },
+    "total-blocking-time": {
+      "label": "TBT",
+      "unit": "ms"
+    },
+    "cumulative-layout-shift": {
+      "label": "CLS",
+      "unit": ""
+    },
+    "speed-index": {
+      "label": "SI",
+      "unit": "ms"
+    }
+  },
+  "median": {
+    "performance": 64,
+    "first-contentful-paint": 1509.7963,
+    "largest-contentful-paint": 12816.99235,
+    "total-blocking-time": 379,
+    "cumulative-layout-shift": 0,
+    "speed-index": 3391.939432504488
+  },
+  "runs": [
+    {
+      "file": "lh-1.json",
+      "fetchTime": "2026-10-13T09:18:41.977Z",
+      "runtimeError": null,
+      "metrics": {
+        "performance": 64,
+        "first-contentful-paint": 1580.9949,
+        "largest-contentful-paint": 12816.99235,
+        "total-blocking-time": 379,
+        "cumulative-layout-shift": 0,
+        "speed-index": 3391.939432504488
+      }
+    },
+    {
+      "file": "lh-2.json",
+      "fetchTime": "2026-10-13T09:18:57.010Z",
+      "runtimeError": null,
+      "metrics": {
+        "performance": 69,
+        "first-contentful-paint": 1507.3472,
+        "largest-contentful-paint": 12775.5208,
+        "total-blocking-time": 246.5,
+        "cumulative-layout-shift": 0,
+        "speed-index": 3302.3052289425377
+      }
+    },
+    {
+      "file": "lh-3.json",
+      "fetchTime": "2026-10-13T09:19:11.659Z",
+      "runtimeError": null,
+      "metrics": {
+        "performance": 64,
+        "first-contentful-paint": 1509.7963,
+        "largest-contentful-paint": 12854.69445,
+        "total-blocking-time": 384,
+        "cumulative-layout-shift": 0,
+        "speed-index": 3417.6170879651972
+      }
+    }
+  ],
+  "note": "Trung vị tính riêng từng chỉ số trên 3 lần chạy tuần tự; null = có lần chạy lỗi, không đo được."
+}

@@ -1,0 +1,63 @@
+{
+  "fixture": {
+    "count": 10006,
+    "seed": 10000,
+    "mock": 6,
+    "fingerprint": "c3cf506d5c82f1433321a63fa1642a703f13894946f98a117b6eff24c57d3bf1",
+    "checkedAt": "2026-10-13T16:22:38.951+07:00",
+    "url": "http://127.0.0.1:4173"
+  },
+  "lighthouse": {
+    "startedAt": "2026-10-13T16:18:37.873+07:00",
+    "finishedAt": "2026-10-13T16:19:21.454+07:00",
+    "url": "http://127.0.0.1:4173",
+    "chromePath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "flags": [
+      "--only-categories=performance",
+      "--form-factor=mobile",
+      "--throttling-method=simulate",
+      "--max-wait-for-load=120000",
+      "--chrome-flags=--headless=new --disable-extensions --no-first-run",
+      "--output=json",
+      "--quiet"
+    ],
+    "runs": 3,
+    "fixtureFingerprint": "c3cf506d5c82f1433321a63fa1642a703f13894946f98a117b6eff24c57d3bf1"
+  },
+  "profilerSearch": {
+    "measuredAt": "2026-10-13T16:21:17.480+07:00",
+    "url": "http://localhost:5173",
+    "viewport": {
+      "width": 1400,
+      "height": 1000
+    },
+    "query": "web",
+    "keyDelayMs": 150,
+    "settleMs": 1000,
+    "maxReloadToStopMs": 50000,
+    "attempt": 1,
+    "reloadAt": "2026-10-13T16:21:12.930+07:00",
+    "startAt": "2026-10-13T16:21:13.448+07:00",
+    "stopAt": "2026-10-13T16:21:15.148+07:00",
+    "reloadToStartMs": 518,
+    "reloadToStopMs": 2218,
+    "mountToStopMs": 2212,
+    "typeStart": "2026-10-13T16:21:13.518+07:00",
+    "typeEnd": "2026-10-13T16:21:14.049+07:00",
+    "rejectedAttempts": [],
+    "heaviestCommitIndex": 3,
+    "fixtureFingerprint": "c3cf506d5c82f1433321a63fa1642a703f13894946f98a117b6eff24c57d3bf1",
+    "tools": {
+      "browser": "Chrome/155.0.8059.39",
+      "cft": "155.0.8059.39",
+      "reactDevtools": "8.0.0",
+      "reactDevtoolsSha256": "d92e1122a16362cc5510927068a5b1a8d50b43e1f3be25c3117f7c005807b302"
+    }
+  },
+  "domBundle": {
+    "measuredAt": "2026-10-13T16:22:41.413+07:00",
+    "url": "http://127.0.0.1:4173",
+    "distDir": "C:\\Users\\admin\\orca\\workspaces\\LTWNC_TH01\\LTWNC_TH02\\FE\\dist",
+    "fixtureFingerprint": "c3cf506d5c82f1433321a63fa1642a703f13894946f98a117b6eff24c57d3bf1"
+  }
+}
