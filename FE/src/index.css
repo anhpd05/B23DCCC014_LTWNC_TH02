@@ -334,12 +334,19 @@ select:focus-visible,
 }
 
 /* ============================ Danh sách ============================ */
-.list ul {
-  display: grid;
-  gap: 10px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+/* Dòng ảo hoá: react-window đặt vị trí/chiều cao; card cao cố định, 10px còn lại là khoảng cách. */
+:root {
+  --card-h: 96px;
+}
+
+.vrow {
+  padding-bottom: 10px;
+}
+
+.vrow > .assignment-item {
+  height: var(--card-h);
+  overflow: hidden;
+  animation: none;
 }
 
 .assignment-item {
@@ -402,6 +409,13 @@ select:focus-visible,
   color: var(--muted);
 }
 
+.assignment-item__subject span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .assignment-item__subject svg {
   color: var(--faint);
   flex: none;
@@ -411,7 +425,9 @@ select:focus-visible,
   margin: 0 0 4px;
   font-size: 0.9375rem;
   font-weight: 600;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   transition: color var(--dur) var(--ease-out);
 }
 
@@ -425,7 +441,8 @@ select:focus-visible,
 
 .assignment-item__due {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow: hidden;
   align-items: center;
   gap: 4px 12px;
   margin: 0;
@@ -749,6 +766,10 @@ select:focus-visible,
 
 /* ============================ Màn hình hẹp ============================ */
 @media (max-width: 640px) {
+  :root {
+    --card-h: 148px;
+  }
+
   .app {
     padding: 22px 12px 64px;
   }

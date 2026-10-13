@@ -1,4 +1,5 @@
 import { useMemo, useState, type PropsWithChildren } from "react";
+import { List, type RowComponentProps } from "react-window";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -21,6 +22,7 @@ import { pinnedFirst, usePinStore } from "../../pins/usePinStore";
 import { useAppDispatch } from "../../../app/hooks";
 import { clearError } from "../assignmentsSlice";
 import { useDebounce } from "../../../shared/hooks/useDebounce";
+import { useMediaQuery } from "../../../shared/hooks/useMediaQuery";
 import { filterByQuery } from "../search";
 import { FILTERS, FILTER_LABEL, type Assignment, type FilterStatus } from "../types";
 
@@ -160,25 +162,79 @@ function Filters() {
   );
 }
 
+/**
+ * Chiều cao một dòng = `--card-h` trong index.css + 10px khoảng cách. Hai bố cục
+ * (1 hàng / 2 hàng ở ≤640px) có chiều cao cố định riêng nên phải khớp CSS.
+ */
+const ROW_HEIGHT_WIDE = 106;
+const ROW_HEIGHT_NARROW = 158;
+const NARROW_QUERY = "(max-width: 640px)";
+
+interface RowData {
+  items: Assignment[];
+  mutating: string[];
+  pinnedIds: string[];
+  onToggle: (a: Assignment) => void;
+  onRemove: (id: string) => void;
+  onTogglePin: (id: string) => void;
+}
+
+// Khoá theo id (mặc định react-window dùng index): ghim/lọc/xoá đổi chỗ dòng thì
+// state đếm ngược và focus đi theo đúng bài, không trượt sang bài khác.
+const rowKeyById = (index: number, { items }: RowData) => items[index].id;
+
+// Khai báo ngoài component cha: react-window tự memo `rowComponent`.
+function AssignmentRow({
+  index,
+  style,
+  ariaAttributes,
+  items,
+  mutating,
+  pinnedIds,
+  onToggle,
+  onRemove,
+  onTogglePin,
+}: RowComponentProps<RowData>) {
+  const a = items[index];
+  return (
+    <div {...ariaAttributes} style={style} className="vrow">
+      <AssignmentCard
+        data={a}
+        busy={mutating.includes(a.id)}
+        pinned={pinnedIds.includes(a.id)}
+        onToggle={onToggle}
+        onRemove={onRemove}
+        onTogglePin={onTogglePin}
+      />
+    </div>
+  );
+}
+
 function Items() {
   const { visibleItems, toggle, remove, mutating } = useListContext();
   const pinnedIds = usePinStore((s) => s.pinnedIds);
   const togglePin = usePinStore((s) => s.togglePin);
+  const narrow = useMediaQuery(NARROW_QUERY);
   if (visibleItems.length === 0) return null;
+  const rowHeight = narrow ? ROW_HEIGHT_NARROW : ROW_HEIGHT_WIDE;
   return (
-    <ul>
-      {visibleItems.map((a) => (
-        <AssignmentCard
-          key={a.id}
-          data={a}
-          busy={mutating.includes(a.id)}
-          pinned={pinnedIds.includes(a.id)}
-          onToggle={toggle}
-          onRemove={remove}
-          onTogglePin={togglePin}
-        />
-      ))}
-    </ul>
+    <List
+      rowComponent={AssignmentRow}
+      rowKey={rowKeyById}
+      rowCount={visibleItems.length}
+      rowHeight={rowHeight}
+      rowProps={{
+        items: visibleItems,
+        mutating,
+        pinnedIds,
+        onToggle: toggle,
+        onRemove: remove,
+        onTogglePin: togglePin,
+      }}
+      defaultHeight={640}
+      style={{ height: `min(${visibleItems.length * rowHeight}px, 70vh)` }}
+      overscanCount={4}
+    />
   );
 }
 

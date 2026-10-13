@@ -62,7 +62,7 @@ export const AssignmentCard = memo(function AssignmentCard({
   const accent = data.completed ? "done" : countdown.tone;
 
   return (
-    <li
+    <article
       className={`assignment-item assignment-item--${accent}${busy ? " assignment-item--busy" : ""}${pinned ? " assignment-item--pinned" : ""}`}
       aria-busy={busy}
     >
@@ -83,7 +83,7 @@ export const AssignmentCard = memo(function AssignmentCard({
       <div className="assignment-item__body">
         <p className="assignment-item__subject">
           <BookOpen size={12} aria-hidden="true" />
-          {data.subject}
+          <span>{data.subject}</span>
         </p>
 
         <p
@@ -142,6 +142,6 @@ export const AssignmentCard = memo(function AssignmentCard({
           )}
         </button>
       </div>
-    </li>
+    </article>
   );
 });
