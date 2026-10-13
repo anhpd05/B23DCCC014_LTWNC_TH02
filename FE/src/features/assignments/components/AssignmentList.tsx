@@ -1,4 +1,4 @@
-import { useState, type PropsWithChildren } from "react";
+import { useMemo, useState, type PropsWithChildren } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -68,6 +68,11 @@ function AssignmentList({ children }: PropsWithChildren) {
   const dispatch = useAppDispatch();
   const [query, setQuery] = useState("");
   const pinnedIds = usePinStore((s) => s.pinnedIds);
+  const visibleItems = pinnedFirst(filterByQuery(ctx.items, query), pinnedIds);
+  const value = useMemo(
+    () => ({ ...ctx, query, setQuery, visibleItems }),
+    [ctx, query, visibleItems],
+  );
 
   if (ctx.status === "loading" || ctx.status === "idle") return <LoadingList />;
 
@@ -85,10 +90,8 @@ function AssignmentList({ children }: PropsWithChildren) {
     );
   }
 
-  const visibleItems = pinnedFirst(filterByQuery(ctx.items, query), pinnedIds);
-
   return (
-    <ListProvider value={{ ...ctx, query, setQuery, visibleItems }}>
+    <ListProvider value={value}>
       <section className="list">
         {ctx.error && (
           <div className="banner banner--error" role="alert">

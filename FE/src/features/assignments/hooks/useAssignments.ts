@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   deleteAssignment,
@@ -41,20 +41,20 @@ export function useAssignments(): AssignmentsFacade {
     if (status === "idle") void dispatch(fetchAssignments());
   }, [status, dispatch]);
 
-  return {
-    items,
-    counts,
-    filter,
-    status,
-    error,
-    mutating,
-    setFilter: (f: FilterStatus) => dispatch(setFilterAction(f)),
-    toggle: (a: Assignment) =>
+  const setFilter = useCallback(
+    (f: FilterStatus) => dispatch(setFilterAction(f)),
+    [dispatch],
+  );
+  const toggle = useCallback(
+    (a: Assignment) =>
       dispatch(
         updateAssignment({ id: a.id, changes: { completed: !a.completed } }),
       ),
-    // Xoá thành công thì bỏ ghim; xoá lỗi giữ nguyên ghim (lỗi hiện ở banner của danh sách).
-    remove: (id: string) => {
+    [dispatch],
+  );
+  // Xoá thành công thì bỏ ghim; xoá lỗi giữ nguyên ghim (lỗi hiện ở banner của danh sách).
+  const remove = useCallback(
+    (id: string) => {
       void dispatch(deleteAssignment(id))
         .unwrap()
         .then(
@@ -65,6 +65,23 @@ export function useAssignments(): AssignmentsFacade {
           () => {},
         );
     },
-    retry: () => dispatch(fetchAssignments()),
-  };
+    [dispatch],
+  );
+  const retry = useCallback(() => dispatch(fetchAssignments()), [dispatch]);
+
+  return useMemo(
+    () => ({
+      items,
+      counts,
+      filter,
+      status,
+      error,
+      mutating,
+      setFilter,
+      toggle,
+      remove,
+      retry,
+    }),
+    [items, counts, filter, status, error, mutating, setFilter, toggle, remove, retry],
+  );
 }

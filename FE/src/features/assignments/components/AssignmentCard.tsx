@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   AlertTriangle,
   BookOpen,
@@ -42,7 +43,12 @@ const TONE_ICON: Record<Tone, LucideIcon> = {
   danger: AlertTriangle,
 };
 
-export function AssignmentCard({
+/**
+ * `memo` + tên hàm giữ nguyên để Profiler hiện "AssignmentCard". Chỉ có tác dụng
+ * khi props ổn định: handler đến từ `useCallback`/store, `data` không đổi tham chiếu
+ * nếu bài đó không đổi.
+ */
+export const AssignmentCard = memo(function AssignmentCard({
   data,
   busy,
   pinned,
@@ -138,4 +144,4 @@ export function AssignmentCard({
       </div>
     </li>
   );
-}
+});
