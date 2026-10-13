@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { DAY_MS, startOfDay } from '../date';
+import { calcDaysLeft } from '../../features/assignments/deadline';
 
 export function useCountdown(dueDate: string) {
   const [now, setNow] = useState(() => Date.now());
@@ -10,7 +10,7 @@ export function useCountdown(dueDate: string) {
   }, []);
 
   return useMemo(() => {
-    const diff = Math.round((startOfDay(Date.parse(dueDate)) - startOfDay(now)) / DAY_MS);
+    const diff = calcDaysLeft(dueDate, now);
     if (diff > 0) {
       return {
         days: diff,

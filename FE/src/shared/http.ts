@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import type { IResponseBE } from "./types";
 import { ApiError } from "./ApiError";
+import { IS_DEV } from "./env";
 
 declare module "axios" {
   export interface InternalAxiosRequestConfig {
@@ -72,7 +73,7 @@ function toApiError(error: unknown): ApiError {
 
 http.interceptors.response.use(
   (response) => {
-    if (import.meta.env.DEV && response.config.metadata) {
+    if (IS_DEV && response.config.metadata) {
       const ms = Math.round(
         performance.now() - response.config.metadata.startedAt,
       );

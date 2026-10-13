@@ -14,7 +14,7 @@ import {
   useAssignments,
   type AssignmentsFacade,
 } from "../hooks/useAssignments";
-import { AssignmentItem } from "./AssignmentItem";
+import { AssignmentCard } from "./AssignmentCard";
 import { FILTERS, FILTER_LABEL, type FilterStatus } from "../types";
 
 const [ListProvider, useListContext] =
@@ -105,7 +105,7 @@ function Items() {
   return (
     <ul>
       {items.map((a) => (
-        <AssignmentItem
+        <AssignmentCard
           key={a.id}
           data={a}
           busy={mutating.includes(a.id)}

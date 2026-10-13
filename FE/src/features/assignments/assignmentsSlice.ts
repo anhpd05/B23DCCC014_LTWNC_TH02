@@ -4,7 +4,7 @@ import type { RootState } from "../../app/store";
 import { createAppAsyncThunk } from "../../app/hooks";
 import { api } from "./api";
 import { isApiError } from "../../shared/ApiError";
-import { startOfDay } from "../../shared/date";
+import { isOverdue } from "./deadline";
 import {
   FILTERS,
   PRIORITY_WEIGHT,
@@ -16,7 +16,7 @@ import {
 
 export type AssignmentsStatus = "idle" | "loading" | "succeeded" | "failed";
 
-interface AssignmentsState {
+export interface AssignmentsState {
   items: Assignment[];
   status: AssignmentsStatus;
   error: string | null;
@@ -174,10 +174,8 @@ type Matcher = (a: Assignment, now: number) => boolean;
 
 const MATCHERS: Record<FilterStatus, Matcher> = {
   all: () => true,
-  pending: (a, now) =>
-    !a.completed && startOfDay(Date.parse(a.dueDate)) >= startOfDay(now),
-  overdue: (a, now) =>
-    !a.completed && startOfDay(Date.parse(a.dueDate)) < startOfDay(now),
+  pending: (a, now) => !a.completed && !isOverdue(a, now),
+  overdue: (a, now) => isOverdue(a, now),
   completed: (a) => a.completed,
 };
 

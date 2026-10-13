@@ -1,9 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import type { Reducer, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import assignmentsReducer from '../features/assignments/assignmentsSlice';
+import type { AssignmentsState } from '../features/assignments/assignmentsSlice';
 
-export const store = configureStore({
-  reducer: { assignments: assignmentsReducer },
+export interface RootState {
+  assignments: AssignmentsState;
+}
+
+// Annotation `Reducer<RootState>` buộc interface khớp reducer thật: lệch là lỗi biên dịch.
+const rootReducer: Reducer<RootState, UnknownAction, Partial<RootState>> = combineReducers({
+  assignments: assignmentsReducer,
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export function makeStore(preloadedState?: Partial<RootState>) {
+  return configureStore({ reducer: rootReducer, preloadedState });
+}
+
+export type AppDispatch = ThunkDispatch<RootState, undefined, UnknownAction>;

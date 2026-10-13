@@ -15,7 +15,7 @@ import {
 import { useCountdown } from "../../../shared/hooks/useCountdown";
 import { PRIORITY_LABEL, type Assignment, type Priority } from "../types";
 
-interface AssignmentItemProps {
+interface AssignmentCardProps {
   data: Assignment;
   busy: boolean;
   onToggle: (a: Assignment) => void;
@@ -38,12 +38,12 @@ const TONE_ICON: Record<Tone, LucideIcon> = {
   danger: AlertTriangle,
 };
 
-export function AssignmentItem({
+export function AssignmentCard({
   data,
   busy,
   onToggle,
   onRemove,
-}: AssignmentItemProps) {
+}: AssignmentCardProps) {
   const countdown = useCountdown(data.dueDate);
   const PriorityIcon = PRIORITY_ICON[data.priority];
   const ToneIcon = TONE_ICON[countdown.tone];
